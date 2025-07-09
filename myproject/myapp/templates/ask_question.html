@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ask a Question</title>
+    <style>
+        :root {
+            --primary: #00ffff;
+            --dark: #111827;
+            --light: #e5e7eb;
+            --accent: #8b5cf6;
+            --highlight: #f9fafb;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 70% 20%, rgba(0, 255, 255, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 30% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 25%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        h2 {
+            color: var(--primary);
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin: 0 0 1rem 0;
+        }
+        
+        .form-container {
+            background-color: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1),
+                        0 0 40px rgba(0, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            z-index: -1;
+            border-radius: 15px;
+            opacity: 0.1;
+            filter: blur(15px);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 5px;
+            color: var(--light);
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        button {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.8rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.6s;
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+        
+        /* Different button styles */
+        button[value="mcq"] {
+            background: linear-gradient(45deg, #00ffff, #00ccff);
+        }
+        
+        button[value="info"] {
+            background: linear-gradient(45deg, #8b5cf6, #6d28d9);
+        }
+        
+        button[value="test"] {
+            background: linear-gradient(45deg, #00ccff, #8b5cf6);
+        }
+        
+        /* UI decorative elements */
+        .floating-element {
+            position: absolute;
+            z-index: -1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .circle {
+            border-radius: 50%;
+            border: 1px dashed var(--primary);
+        }
+        
+        .line {
+            background-color: var(--primary);
+        }
+        
+        .home-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .home-link:hover {
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+        }
+        
+        /* Animated glow */
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); }
+            100% { box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); }
+        }
+        
+        .form-container {
+            animation: glow 4s infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                margin: 1rem;
+            }
+            
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="floating-element circle" style="width: 300px; height: 300px; top: 10%; left: 5%;"></div>
+    <div class="floating-element circle" style="width: 200px; height: 200px; bottom: 10%; right: 5%;"></div>
+    <div class="floating-element line" style="width: 100px; height: 1px; top: 30%; right: 20%;"></div>
+    <div class="floating-element line" style="width: 1px; height: 80px; top: 30%; right: 20%;"></div>
+    <div class="floating-element line" style="width: 80px; height: 1px; bottom: 25%; left: 15%;"></div>
+    <div class="floating-element line" style="width: 1px; height: 60px; bottom: 25%; left: 15%;"></div>
+
+    <div class="container">
+        <div class="header">
+            <h2>GENERATE MCQs {{username}}</h2>
+        </div>
+        
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="topic">Enter Topic:</label>
+                    <input type="text" id="topic" name="topic" required placeholder="e.g. Quantum Physics, World History, Cell Biology">
+                </div>
+                
+                <div class="form-group">
+                    <label for="num_questions">Number of Questions:</label>
+                    <input type="number" id="num_questions" name="num_questions" min="1" max="10" value="5" required>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="submit" name="action" value="mcq">Generate MCQs</button>
+                    <button type="submit" name="action" value="info">Get Information</button>
+                    <button type="submit" name="action" value="test">Generate Test</button>
+                </div>
+            </form>
+        </div>
+        
+        <a href="{% url 'home' %}" class="home-link">Return to Home</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <style>
+        :root {
+            --primary: #00ffff;
+            --dark: #111827;
+            --light: #e5e7eb;
+            --accent: #8b5cf6;
+            --highlight: #f9fafb;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 80% 10%, rgba(0, 255, 255, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 20% 90%, rgba(139, 92, 246, 0.1) 0%, transparent 25%);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), transparent);
+        }
+        
+        .logo h2 {
+            color: var(--primary);
+            margin: 0;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .content {
+            background-color: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 2.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.05), rgba(139, 92, 246, 0.05));
+            z-index: -1;
+        }
+        
+        h2 {
+            color: var(--primary);
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        p {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.2rem 0;
+        }
+        
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        a:hover::after {
+            width: 100%;
+        }
+        
+        a:hover {
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-right: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.6s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .btn::after {
+            display: none;
+        }
+        
+        .welcome-message {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .actions {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .action-card {
+            flex: 1;
+            min-width: 250px;
+            background-color: rgba(17, 24, 39, 0.6);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: var(--primary);
+        }
+        
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            transition: height 0.3s ease;
+        }
+        
+        .action-card:hover::before {
+            height: 100%;
+        }
+        
+        .action-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            font-weight: 400;
+        }
+        
+        .action-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* UI decorative elements */
+        .ui-element {
+            position: absolute;
+            border: 1px solid var(--primary);
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .ui-circle {
+            position: fixed;
+            border-radius: 50%;
+            border: 1px dashed var(--primary);
+            opacity: 0.05;
+            z-index: -1;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative UI elements -->
+    <div class="ui-circle" style="top: -100px; right: -100px; width: 300px; height: 300px;"></div>
+    <div class="ui-circle" style="bottom: -150px; left: -50px; width: 400px; height: 400px;"></div>
+    <div class="ui-element" style="top: 30%; right: 10%; width: 50px; height: 1px;"></div>
+    <div class="ui-element" style="top: 32%; right: 10%; width: 1px; height: 80px;"></div>
+    <div class="ui-element" style="bottom: 40%; left: 5%; width: 30px; height: 1px;"></div>
+    <div class="ui-element" style="bottom: 45%; left: 5%; width: 1px; height: 50px;"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <h2>QUANTUM NEXUS</h2>
+            </div>
+            <div class="nav-links">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'history' %}">History</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="content">
+            {% if user.is_authenticated %}
+                <div class="welcome-message">
+                    <h2>Welcome to the Nexus, {{ user.username }}</h2>
+                </div>
+                
+                <div class="actions">
+                    <div class="action-card">
+                        <h3>Ask a Question</h3>
+                        <p>Explore the database or submit your inquiries to our advanced AI system.</p>
+                        <a href="{% url 'ask_question' %}" class="btn">Begin Inquiry</a>
+                    </div>
+
+                    <div class="action-card">
+                        <h3>Certifications</h3>
+                        <p>Explore the certifications for the user.</p>
+                        <a href="{% url 'certifications' %}" class="btn">Begin Inquiry</a>
+                    </div>
+                    
+                    <div class="action-card">
+                        <h3>View History</h3>
+                        <p>Access your previous interactions and saved responses.</p>
+                        <a href="{% url 'history' %}" class="btn">Access Records</a>
+                    </div>
+                </div>
+            {% else %}
+                <h2>Welcome to the Quantum Nexus</h2>
+                <p>Access our advanced knowledge database and AI-powered question answering system.</p>
+                <p>Please login or create an account to continue.</p>
+                
+                <div class="actions">
+                    <a href="{% url 'login' %}" class="btn">Login</a>
+                    <a href="{% url 'register' %}" class="btn">Register</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Certification Hub</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600&display=swap');
+        
+        :root {
+            --primary: #64ffda;
+            --secondary: #7d5fff;
+            --bg-dark: #0a0e17;
+            --bg-panel: #131c2e;
+            --bg-card: #1a2438;
+            --text-bright: #ffffff;
+            --text-main: #cbd5e0;
+            --text-dim: #8493a8;
+            --glow: 0 0 10px rgba(100, 255, 218, 0.7);
+            --glow-purple: 0 0 10px rgba(125, 95, 255, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(125, 95, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(100, 255, 218, 0.05) 0%, transparent 50%),
+                linear-gradient(to bottom, rgba(10, 14, 23, 0.8) 0%, var(--bg-dark) 100%);
+            color: var(--text-main);
+            font-family: 'Exo 2', sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(125, 95, 255, 0.3);
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+        
+        .home-link {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-bright);
+            text-decoration: none;
+            background-color: rgba(19, 28, 46, 0.7);
+            border: 1px solid var(--primary);
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .home-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.2), transparent);
+            transition: all 0.4s ease;
+        }
+        
+        .home-link:hover::before {
+            left: 100%;
+        }
+        
+        .home-link:hover {
+            box-shadow: var(--glow);
+            background-color: rgba(19, 28, 46, 0.9);
+        }
+        
+        .home-link svg {
+            margin-right: 0.5rem;
+        }
+        
+        h1, h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-bright);
+            letter-spacing: 1px;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2 svg {
+            margin-right: 0.75rem;
+        }
+        
+        hr {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, var(--secondary), transparent);
+            margin: 2rem 0;
+            opacity: 0.3;
+        }
+        
+        .profile-card {
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+        
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            margin-right: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--bg-dark);
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(100, 255, 218, 0.3);
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-bright);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .profile-stat {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .stat-item {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 1px solid rgba(125, 95, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow-purple);
+            border-color: rgba(125, 95, 255, 0.3);
+        }
+        
+        .stat-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .cert-list {
+            list-style: none;
+        }
+        
+        .cert-item {
+            background-color: var(--bg-panel);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(125, 95, 255, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cert-item::before {
+            content: '';
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        
+        .cert-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(125, 95, 255, 0.3);
+        }
+        
+        .cert-content {
+            flex: 1;
+        }
+        
+        .cert-title {
+            font-weight: 600;
+            color: var(--text-bright);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cert-desc {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cert-credits {
+            display: inline-block;
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .cert-action {
+            margin-left: 1rem;
+        }
+        
+        .view-btn {
+            font-family: 'Exo 2', sans-serif;
+            background-color: rgba(125, 95, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .view-btn svg {
+            margin-left: 0.5rem;
+        }
+        
+        .view-btn:hover {
+            background-color: rgba(125, 95, 255, 0.3);
+            box-shadow: var(--glow-purple);
+        }
+        
+        .empty-list {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-dim);
+            font-style: italic;
+            background-color: var(--bg-panel);
+            border-radius: 8px;
+            border: 1px dashed rgba(125, 95, 255, 0.2);
+        }
+        
+        .locked-cert {
+            opacity: 0.7;
+        }
+        
+        .locked-cert::before {
+            background: linear-gradient(to bottom, #8493a8, transparent);
+        }
+        
+        .lock-icon {
+            color: var(--text-dim);
+            margin-left: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .profile-stat {
+                grid-template-columns: 1fr;
+            }
+            
+            .cert-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .cert-action {
+                margin-left: 0;
+                margin-top: 1rem;
+                width: 100%;
+            }
+            
+            .view-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Command Center</h1>
+            <a href="{% url 'home' %}" class="home-link">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 22V12H15V22" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Return to Dashboard
+            </a>
+        </header>
+        
+        <section class="profile-card">
+            <div class="profile-header">
+                <div class="avatar">
+                    {{ user_profile.username|slice:":1" }}
+                </div>
+                <div class="profile-info">
+                    <h2 class="profile-name">{{ user_profile.username }}</h2>
+                    <div class="profile-role">Certification Candidate</div>
+                </div>
+            </div>
+            
+            <div class="profile-stat">
+                <div class="stat-item">
+                    <div class="stat-title">Total Certifications</div>
+                    <div class="stat-value">{{ user_profile.total_certifications }}</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-title">Total Credits</div>
+                    <div class="stat-value">{{ user_profile.total_credits }}</div>
+                </div>
+            </div>
+        </section>
+        
+        <h2>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.21 13.89L7 23L12 20L17 23L15.79 13.88" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M12 15C15.866 15 19 11.866 19 8C19 4.13401 15.866 1 12 1C8.13401 1 5 4.13401 5 8C5 11.866 8.13401 15 12 15Z" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Achieved Certifications
+        </h2>
+        
+        <ul class="cert-list">
+            {% for cert in achieved_certs %}
+                <li class="cert-item">
+                    <div class="cert-content">
+                        <div class="cert-title">{{ cert.title }}</div>
+                        <div class="cert-desc">{{ cert.description }}</div>
+                        <div class="cert-credits">Credits: {{ cert.credits }}</div>
+                    </div>
+                    <div class="cert-action">
+                        <a href="{% url 'certificate_view' cert.id %}" target="_blank">
+                            <button class="view-btn">
+                                View Certificate
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M18 13V19C18 19.5304 17.7893 20.0391 17.4142 20.4142C17.0391 20.7893 16.5304 21 16 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V8C3 7.46957 3.21071 6.96086 3.58579 6.58579C3.96086 6.21071 4.46957 6 5 6H11" stroke="#7d5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M15 3H21V9" stroke="#7d5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M10 14L21 3" stroke="#7d5fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </button>
+                        </a>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="empty-list">No certifications achieved yet. Complete courses to earn certificates.</li>
+            {% endfor %}
+        </ul>
+        
+        <h2>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="11" width="18" height="11" rx="2" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11" stroke="#64ffda" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="16" r="1" fill="#64ffda"/>
+            </svg>
+            Future Certifications
+        </h2>
+        
+        <ul class="cert-list">
+            {% for cert in not_achieved_certs %}
+                <li class="cert-item locked-cert">
+                    <div class="cert-content">
+                        <div class="cert-title">{{ cert.title }}</div>
+                        <div class="cert-desc">{{ cert.description }}</div>
+                        <div class="cert-credits">Credits: {{ cert.credits }}</div>
+                    </div>
+                    <div class="lock-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <form action="{% url 'start_certification_quiz' cert.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="view-btn">Attempt Certification</button>
+                        </form>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="empty-list">You've achieved all available certifications! Check back later for new opportunities.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
