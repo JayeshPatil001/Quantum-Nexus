@@ -426,7 +426,7 @@ def certification_quiz_result(request):
             success_message = f"You've already earned the {cert.title} certification."
 
     else:
-        success_message = "You didn't pass the quiz. Please try again."
+        success_message = "You disappeared 3 times during test. Please try again."
 
     # Clear certification session data
     for key in ["cert_quiz_questions", "cert_current_question_index", "cert_user_answers", "certification_id"]:
